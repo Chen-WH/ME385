@@ -15,9 +15,10 @@ n = size(theta, 1);
 %% 规划
 f = @(x) sum(x(1:n - 1)); % 代价函数，这里定义为最后一个任务点对应时间
 x0 = rand(7*n - 1, 1);    % 初始值 d_tau 和 d_theta 均随机数生成
-lb = [zeros(n - 1, 1); -ones(6*n, 1)*v_max];   % 下界
-rb = [ones(n - 1, 1)*inf; ones(6*n, 1)*v_max]; % 上界
-var = fmincon(f, x0, [], [], [], [], lb, rb, 'myCon');
+options = optimoptions('fmincon','Algorithm','sqp');
+var = fmincon(f, x0, [], [], [], [], [], [], 'myCon', options); % fmincon求解
+% var = mySQP(f, x0, @myCon); % SQP求解
+
 %% 插值
 d_tau = var(1:n - 1);
 tau = [0; d_tau];

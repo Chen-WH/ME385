@@ -63,12 +63,9 @@ for num = 1:size(Js, 3)
     Js_cond(num) = cond(Js(:, :, num));
 end
 singular_index = find(Js_cond > 10);
-figure(2);
-plot(Js_cond);
-title("速度雅可比矩阵条件数");
 
 for n=1:20:800%length(theta_traj)
-    figure(4)
+    figure(3)
     for i=1:6
         config(i).JointPosition = theta_traj(i,n);
     end
