@@ -1,7 +1,7 @@
 function [cin, ceq] = myCon(var)
-n = (length(var) + 1)/7;
+n = (length(var) + 13)/7;
 d_tau = var(1:n - 1);
-d_theta = reshape(var(n:end), [n, 6]);
+d_theta = [zeros(1, 6); reshape(var(n:end), [n - 2, 6]); zeros(1, 6)];
 global v_max a_max j_max theta
 %% 不等号约束条件
 % 时间约束

@@ -14,7 +14,7 @@ function [t, x, tau] = trajectory_Her(theta, N, v_max, a_max, j_max)
 n = size(theta, 1);
 %% 规划
 f = @(x) sum(x(1:n - 1)); % 代价函数，这里定义为最后一个任务点对应时间
-x0 = rand(7*n - 1, 1);    % 初始值 d_tau 和 d_theta 均随机数生成
+x0 = rand(7*n - 13, 1);    % 初始值 d_tau 和 d_theta 均随机数生成
 options = optimoptions('fmincon','Algorithm','sqp');
 var = fmincon(f, x0, [], [], [], [], [], [], 'myCon', options); % fmincon求解
 % var = mySQP(f, x0, @myCon); % SQP求解
@@ -25,7 +25,7 @@ tau = [0; d_tau];
 for num = 2:n
     tau(num) = tau(num - 1) + tau(num);
 end
-d_theta = reshape(var(n:end), [n, 6]);
+d_theta = [zeros(1, 6); reshape(var(n:end), [n - 2, 6]); zeros(1, 6)];
 t = linspace(0, sum(d_tau), N);
 x = zeros(N, 6);
 for num = 1:6

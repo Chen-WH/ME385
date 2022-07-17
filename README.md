@@ -15,7 +15,7 @@
 
 ## 动力学 Dynamics
 
-- 核心测试程序
+- 核心测试程序 [./src/dyn_test.m](./src/dyn_test.m)
 
 ## 路径规划 Path planning
 

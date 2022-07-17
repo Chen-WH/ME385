@@ -56,13 +56,17 @@ for point = 1:n
         theta(4, 2*num - 1) = theta(4, 2*num - 1) - theta(2, 2*num - 1) - theta(3, 2*num - 1);
         theta(4, 2*num) = theta(4, 2*num) - theta(2, 2*num) - theta(3, 2*num);
     end
-    theta = wrapToPi(theta);
     error = zeros(8, 1);
     for num = 1:8
         error(num) = angleDelta(theta(:, num), theta0);
     end
     [~, index] = min(error);
     theta_set(:, point) = theta(:, index);
-    theta0 = theta(:, index);
+    for num = 1:6
+        if abs(theta_set(num, point) - theta0(num)) > pi
+            theta_set(num, point) = theta_set(num, point) + 2*pi*sign(theta0(num) - theta_set(num, point));
+        end
+    end
+    theta0 = theta_set(:, point);
 end
 end
